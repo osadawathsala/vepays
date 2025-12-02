@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.vepay</groupId>
+		<groupId>com.vepay</groupId>
 		<artifactId>vepay-bom</artifactId>
 		<version>1.0.0</version>
 		<relativePath>../vepay-bom/pom.xml</relativePath>
@@ -12,6 +12,7 @@
 	<artifactId>gatewayserver</artifactId>
 	<version>1.0.0</version>
 	<name>gatewayserver</name>
+	<packaging>jar</packaging>
 	<description>Service handling user interaction</description>
 	<url/>
 	<licenses>

@@ -6,7 +6,7 @@
 	<artifactId>vepay-bom</artifactId>
 	<version>1.0.0</version>
 	<name>vepay-bom</name>
-	<description>Service handling user interaction</description>
+	<description>Common BOM for vepay microservices</description>
 	<packaging>pom</packaging>
 	<url/>
 	<licenses>
@@ -101,6 +101,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>3.5.8</version>
 			</plugin>
 		</plugins>
 	</build>
