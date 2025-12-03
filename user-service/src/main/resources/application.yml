@@ -3,14 +3,17 @@ server:
 
 spring:
   application:
-    name: "user-service"
+    name: USER-SERVICE
   datasource:
-    url: jdbc:mysql://localhost:3306/userdb
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/user_db?use8Unicode=yes&characterEncoding=UTF-8&createDatabaseIfNotExist=true
     username: root
-    password: root
-    jpa:
-      show-sql: true
-
+    password: Read@com1978
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    #database-platform: org.hibernate.dialect.MyQL8Dialect
 eureka:
   instance:
     preferIpAddress: true
