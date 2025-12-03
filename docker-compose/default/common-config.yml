@@ -1,0 +1,11 @@
+services:
+  network-deploy-service:
+    networks:
+      - vepay
+microservice-eureka-config:
+  extends:
+    service: network-deploy-service
+  environment:
+    EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+
+

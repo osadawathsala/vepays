@@ -1,0 +1,68 @@
+services:
+  eurekaserver:
+    image: "osadasliit/eurekaserver:v1"
+    container_name: eurekaserver-ms
+    ports:
+      - "8070:8070"
+    depends_on:
+      configserver:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8070/actuator/health/readiness | grep UP || exit 1"
+      interval: 20s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+    extends:
+      file: common-config.yml
+      service: microservice-configserver-config
+    environment:
+      SPRING_APPLICATION_NAME: "eurekaserver"
+      OTEL_SERVICE_NAME: "eurekaserver"
+
+  userservice:
+    image: "osadasliit/user-service:v1"
+    container_name: user-service-ms
+    healthcheck:
+      test: "curl --fail --silent localhost:8080/actuator/health/readiness | grep UP || exit 1"
+      interval: 20s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+    depends_on:
+      configserver:
+        condition: service_healthy
+      eurekaserver:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: "user-service"
+      #SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS: "kafka:9092"
+    extends:
+      file: common-config.yml
+      service: microservice-eureka-config
+
+  gatewayserver:
+    image: "osadasliit/gatewayserver:v1"
+    container_name: gatewayserver-ms
+    ports:
+      - "8072:8072"
+    depends_on:
+      accounts:
+        condition: service_healthy
+      loans:
+        condition: service_healthy
+      cards:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: "gatewayserver"
+      OTEL_SERVICE_NAME: "gatewayserver"
+      #SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: "http://keycloak:8080/realms/master/protocol/openid-connect/certs"
+    extends:
+      file: common-config.yml
+      service: microservice-eureka-config
+
+networks:
+  vepay:
+    driver: "bridge"
